@@ -1,0 +1,2131 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>El Establo - Menú Digital Premium</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rojo-oscuro: #6B0F12;
+      --dorado: #D9B46A;
+      --madera-oscura: #111111;
+      --crema: #FDFBF7;
+      --gris-texto: #333333;
+      --blanco: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--crema);
+      color: var(--gris-texto);
+      padding-top: 210px;
+      padding-bottom: 120px;
+      overflow-x: hidden;
+      line-height: 1.5;
+    }
+
+    body.cart-is-open {
+      overflow: hidden;
+    }
+
+    #skeleton-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: var(--madera-oscura);
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.16s ease-out, visibility 0.16s ease-out;
+    }
+
+    #skeleton-loader.is-ready {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .rueda-establo {
+      width: 82px;
+      height: 82px;
+      border: 7px solid #925b31;
+      border-radius: 50%;
+      position: relative;
+      display: grid;
+      place-items: center;
+      background: #3b2417;
+      box-shadow: inset 0 0 0 2px #d9b46a, inset 0 0 0 8px #4f2f1c, 0 0 0 1px rgba(217, 180, 106, 0.6);
+      animation: spin-wheel 2.6s linear infinite;
+    }
+
+    .rueda-establo::before,
+    .rueda-establo::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+    }
+
+    .rueda-establo::before {
+      width: 26px;
+      height: 26px;
+      border: 4px solid #c48a48;
+      background: #3b2417;
+      box-shadow: inset 0 0 0 3px #1e120c;
+    }
+
+    .rueda-establo::after {
+      width: 8px;
+      height: 8px;
+      background: #d9b46a;
+      box-shadow: 0 0 0 3px #4f2f1c;
+    }
+
+    .rueda-radios {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      border-radius: 50%;
+      background: repeating-conic-gradient(from 0deg, #c48a48 0deg 5deg, transparent 5deg 45deg);
+      -webkit-mask: radial-gradient(circle, transparent 0 12px, #000 13px 100%);
+      mask: radial-gradient(circle, transparent 0 12px, #000 13px 100%);
+      opacity: 0.92;
+    }
+
+    @keyframes spin-wheel {
+      to { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      color: white;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 2px;
+      font-weight: 400;
+      text-transform: uppercase;
+      margin-top: 16px;
+      line-height: 1;
+    }
+
+    .loader-subtext {
+      color: var(--dorado);
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.64rem;
+      font-weight: 700;
+      letter-spacing: 2.2px;
+      margin-top: 8px;
+      opacity: 0.9;
+    }
+
+    header {
+      background-color: var(--madera-oscura);
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+      text-align: center;
+      padding-top: 10px;
+    }
+
+    .logo-container img {
+      max-width: 90px;
+      height: auto;
+      margin-bottom: 5px;
+      display: inline-block;
+    }
+
+    .nav-tabs-wrapper {
+      background: linear-gradient(90deg, rgba(62, 8, 11, 0.88), rgba(107, 15, 18, 0.80), rgba(49, 6, 8, 0.88));
+      backdrop-filter: blur(16px) saturate(135%);
+      -webkit-backdrop-filter: blur(16px) saturate(135%);
+      overflow-x: auto;
+      white-space: nowrap;
+      scrollbar-width: none;
+      border-bottom: 3px solid var(--dorado);
+      position: sticky;
+      top: 0;
+      z-index: 1001;
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    }
+
+    .nav-tabs-wrapper::-webkit-scrollbar {
+      display: none;
+    }
+
+    .nav-tabs {
+      display: inline-flex;
+      padding: 0 10px;
+    }
+
+    .tab-btn {
+      padding: 14px 20px;
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      text-transform: uppercase;
+      font-size: 1rem;
+      font-weight: bold;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      opacity: 0.7;
+    }
+
+    .tab-btn.active {
+      color: #ffffff;
+      opacity: 1;
+    }
+
+    .tab-btn.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 15%;
+      right: 15%;
+      height: 3px;
+      background: var(--dorado);
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px 15px;
+    }
+
+    .menu-section {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    .menu-section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .section-title {
+      background-color: var(--rojo-oscuro);
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      padding: 10px 15px;
+      font-size: 1.1rem;
+      border-left: 5px solid var(--dorado);
+      margin: 20px 0 15px 0;
+      text-transform: uppercase;
+    }
+
+    .menu-item,
+    .interactive-box {
+      background: #ffffff;
+      border: 1.5px solid rgba(217, 180, 106, 0.4);
+      border-radius: 12px;
+      padding: 15px;
+      margin-bottom: 15px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        box-shadow 0.3s cubic-bezier(0.25, 0.8, 0.25, 1),
+        border-color 0.3s ease;
+    }
+
+    .menu-item:hover,
+    .menu-item:active,
+    .interactive-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 20px rgba(107, 15, 18, 0.08);
+      border-color: var(--dorado);
+    }
+
+    .interactive-box {
+      display: block;
+      padding: 25px 20px;
+    }
+
+    .item-info {
+      flex: 1;
+      padding-right: 15px;
+    }
+
+    .item-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 4px;
+    }
+
+    .item-name {
+      font-weight: 800;
+      color: #000000;
+      font-size: 1rem;
+      text-transform: uppercase;
+    }
+
+    .item-desc {
+      font-size: 0.85rem;
+      color: #555555;
+      line-height: 1.4;
+      margin-top: 6px;
+    }
+
+    .item-price {
+      font-weight: bold;
+      color: #6B0F12;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+
+    /* En Platos y Ensaladas, todos los precios y controles ocupan la misma columna. */
+    #platos .item-info,
+    #ensaladas .item-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #platos .item-header,
+    #ensaladas .item-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 3.2rem;
+      column-gap: 12px;
+      width: 100%;
+    }
+
+    #platos .item-price,
+    #ensaladas .item-price {
+      justify-self: end;
+      text-align: right;
+    }
+
+    #platos .quantity-control,
+    #ensaladas .quantity-control {
+      flex: 0 0 104px;
+      justify-content: flex-end;
+    }
+
+    .quantity-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-quantity {
+      min-width: 18px;
+      color: var(--rojo-oscuro);
+      text-align: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.08rem;
+      line-height: 1;
+    }
+
+    .product-quantity.is-updating,
+    #total-order-amount.is-updating,
+    #cart-drawer-total.is-updating {
+      animation: price-fade 0.34s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .menu-item.is-updated {
+      animation: gold-card-pulse 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    @keyframes price-fade {
+      0% { opacity: 0.35; transform: translateY(2px); }
+      65% { opacity: 1; transform: translateY(-1px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes gold-card-pulse {
+      0% { box-shadow: 0 4px 10px rgba(0,0,0,0.04); border-color: #E8D7AD; }
+      45% { box-shadow: 0 0 0 3px rgba(217,180,106,0.26), 0 8px 18px rgba(107,15,18,0.10); border-color: var(--dorado); }
+      100% { box-shadow: 0 4px 10px rgba(0,0,0,0.04); border-color: #E8D7AD; }
+    }
+
+    .btn-minus,
+    .btn-plus {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+
+    .btn-minus {
+      border: 1px solid #333333;
+      background: #ffffff;
+      color: #333333;
+    }
+
+    .btn-minus:active {
+      transform: scale(0.9);
+      background: #333333;
+      color: #ffffff;
+    }
+
+    .btn-plus {
+      border: 1px solid var(--dorado);
+      background: #ffffff;
+      color: var(--dorado);
+    }
+
+    .btn-plus:active {
+      transform: scale(0.9);
+      background: var(--dorado);
+      color: white;
+    }
+
+    .selector-group {
+      margin-bottom: 15px;
+    }
+
+    .choice-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 11px;
+    }
+
+    .choice-grid.size-grid {
+      gap: 8px;
+    }
+
+    .choice-btn {
+      min-height: 54px;
+      border: 1.5px solid #ded5d7;
+      background: #ffffff;
+      color: #1a1a1a;
+      border-radius: 999px;
+      padding: 10px 19px;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.82rem;
+      font-weight: 700;
+      line-height: 1.12;
+      text-align: center;
+      transition: transform 0.16s ease, background-color 0.16s ease, color 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease;
+    }
+
+    .choice-btn:active {
+      transform: scale(0.96);
+    }
+
+    .choice-btn.is-selected {
+      background: var(--rojo-oscuro);
+      border-color: var(--dorado);
+      color: white;
+      box-shadow: 0 3px 9px rgba(107, 15, 18, 0.24), 0 0 0 2px rgba(217, 180, 106, 0.2);
+    }
+
+    /* Selector táctil: dos cortes por fila y tamaños que se ven de un vistazo. */
+    #cut-choice-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #cut-choice-grid .choice-btn {
+      width: 100%;
+      min-height: 58px;
+      padding: 10px 12px;
+    }
+
+    .size-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .size-grid .choice-btn {
+      min-height: 58px;
+      padding: 7px 5px;
+    }
+
+    .size-grid .choice-detail {
+      display: block;
+    }
+
+    .choice-btn .choice-main {
+      display: inline;
+      font-weight: 800;
+    }
+
+    .choice-btn .choice-detail {
+      display: none;
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.4px;
+      margin-top: 3px;
+    }
+
+    .size-grid .choice-btn {
+      min-height: 48px;
+      padding: 8px 17px;
+    }
+
+    .size-grid .choice-main {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.55px;
+    }
+
+    .size-grid .choice-detail {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.58rem;
+      letter-spacing: 0;
+      color: inherit;
+      opacity: 0.78;
+    }
+
+    .doneness-selector[hidden] {
+      display: none;
+    }
+
+    .doneness-grid .choice-btn {
+      min-height: 52px;
+      font-size: 0.78rem;
+    }
+
+    .big-add-btn {
+      position: relative;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+    }
+
+    .big-add-btn.add-success {
+      background: var(--rojo-oscuro);
+      color: white;
+      border: 1px solid var(--dorado);
+      pointer-events: none;
+      box-shadow: inset 0 -3px 0 rgba(217, 180, 106, 0.82), 0 4px 10px rgba(107, 15, 18, 0.24);
+      animation: add-success-pop 0.42s ease-out;
+    }
+
+    .add-success-check {
+      display: inline-block;
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.05rem;
+      margin-right: 5px;
+    }
+
+    @keyframes add-success-pop {
+      45% { transform: scale(0.97); }
+      75% { transform: scale(1.01); }
+    }
+
+    .price-value.price-pulse {
+      animation: price-pulse 0.22s ease-out;
+    }
+
+    .price-value {
+      color: #e6bf68;
+      font-size: 2rem;
+      letter-spacing: 0.5px;
+      text-shadow: 0 0 5px rgba(255, 220, 118, 0.38), 0 0 13px rgba(182, 62, 25, 0.3);
+    }
+
+    @keyframes price-pulse {
+      50% { transform: translateY(-2px); opacity: 0.72; }
+    }
+
+    @media (max-width: 390px) {
+      .choice-grid { gap: 7px; }
+      .choice-btn { min-height: 48px; padding: 8px 10px; font-size: 0.74rem; }
+      #cut-choice-grid .choice-btn { min-height: 52px; }
+      .size-grid .choice-btn { min-height: 52px; }
+      .size-grid .choice-main { font-size: 1rem; }
+      .doneness-grid .choice-btn { font-size: 0.61rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: bold;
+      color: #111111;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cccccc;
+      border-radius: 8px;
+      background: #fdfdfd;
+      font-size: 1rem;
+      color: #111111;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='%232A1A12' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: calc(100% - 12px) center;
+    }
+
+    .live-price-display {
+      background: var(--madera-oscura);
+      color: white;
+      padding: 15px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 10px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .active-price-summary {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .active-selection-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      min-height: 28px;
+      padding: 4px 9px;
+      border: 1px solid rgba(217, 180, 106, 0.7);
+      border-radius: 999px;
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+    }
+
+    .active-selection-count small {
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0;
+      opacity: 0.82;
+    }
+
+    .cachapa-selection-count {
+      min-width: 22px;
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      text-align: center;
+    }
+
+    .price-value {
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      font-weight: 800;
+      font-size: 1.7rem;
+    }
+
+    .carne-actions {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .big-add-btn {
+      background: var(--dorado);
+      color: var(--madera-oscura);
+      border: none;
+      padding: 14px;
+      font-family: 'Anton', sans-serif;
+      font-weight: 800;
+      border-radius: 6px;
+      cursor: pointer;
+      text-transform: uppercase;
+      flex: 1;
+      transition: all 0.2s ease;
+    }
+
+    .big-add-btn:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .order-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--madera-oscura);
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 20px;
+      border-top: 3px solid var(--dorado);
+      z-index: 1001;
+    }
+
+    .total-amount {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: var(--blanco);
+    }
+
+    .whatsapp-btn {
+      background: var(--rojo-oscuro);
+      color: white;
+      padding: 12px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 7px 16px rgba(107, 15, 18, 0.24);
+      transition: transform 0.2s ease, background 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .whatsapp-btn:hover {
+      background: #81151A;
+      box-shadow: 0 9px 20px rgba(107, 15, 18, 0.30);
+    }
+
+    .whatsapp-btn:active {
+      transform: scale(0.95);
+    }
+
+    .quantity-feedback {
+      position: fixed;
+      left: 50%;
+      bottom: 105px;
+      z-index: 3000;
+      max-width: min(92vw, 420px);
+      padding: 11px 15px;
+      border: 1px solid rgba(217, 180, 106, 0.75);
+      border-radius: 12px;
+      background: rgba(17, 17, 17, 0.95);
+      color: white;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.35;
+      opacity: 0;
+      pointer-events: none;
+      transform: translate3d(-50%, 10px, 0);
+      transition: opacity 0.18s ease, transform 0.22s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .quantity-feedback.show {
+      opacity: 1;
+      transform: translate3d(-50%, 0, 0);
+    }
+
+    .quantity-control.is-empty .product-quantity {
+      color: var(--dorado);
+      animation: price-fade 0.34s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* Panel del carrito: se mantiene oculto hasta que el cliente toca "Enviar Pedido". */
+    .cart-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.58);
+      z-index: 2500;
+      opacity: 0;
+      visibility: hidden;
+      -webkit-backdrop-filter: blur(0);
+      backdrop-filter: blur(0);
+      transition: opacity 0.22s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.22s linear, -webkit-backdrop-filter 0.22s ease, backdrop-filter 0.22s ease;
+    }
+
+    .cart-backdrop.show {
+      opacity: 1;
+      visibility: visible;
+      -webkit-backdrop-filter: blur(2px);
+      backdrop-filter: blur(2px);
+    }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: min(100%, 420px);
+      background: var(--crema);
+      z-index: 2600;
+      opacity: 0;
+      transform: translate3d(105%, 0, 0);
+      transition: transform 0.34s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.18s ease-out;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.25);
+      display: flex;
+      flex-direction: column;
+      will-change: transform, opacity;
+    }
+
+    .cart-drawer.show {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .cart-drawer-header,
+    .cart-items,
+    .cart-drawer-footer {
+      opacity: 0;
+      transform: translate3d(16px, 0, 0);
+      transition: transform 0.28s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.2s ease-out;
+    }
+
+    .cart-drawer.show .cart-drawer-header,
+    .cart-drawer.show .cart-items,
+    .cart-drawer.show .cart-drawer-footer {
+      opacity: 1;
+      transform: translate3d(0, 0, 0);
+    }
+
+    .cart-drawer.show .cart-items { transition-delay: 0.035s; }
+    .cart-drawer.show .cart-drawer-footer { transition-delay: 0.07s; }
+
+    @media (max-width: 600px) {
+      .cart-drawer {
+        width: min(100%, 420px);
+        transform: translate3d(108%, 0, 0);
+      }
+    }
+
+    .cart-drawer-header {
+      background: var(--madera-oscura);
+      color: white;
+      padding: 18px 20px;
+      border-bottom: 3px solid var(--dorado);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-drawer-title {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    .close-cart-btn {
+      border: 1px solid var(--dorado);
+      background: transparent;
+      color: var(--dorado);
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      font-size: 1.35rem;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 15px;
+    }
+
+    .cart-empty {
+      text-align: center;
+      color: #666;
+      padding: 40px 10px;
+      font-size: 0.9rem;
+    }
+
+    .cart-line {
+      background: white;
+      border: 1px solid rgba(217, 180, 106, 0.45);
+      border-radius: 10px;
+      padding: 13px;
+      margin-bottom: 10px;
+    }
+
+    .cart-line-top,
+    .cart-line-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .cart-line-name {
+      color: #111;
+      font-weight: 800;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .cart-line-subtotal {
+      color: var(--rojo-oscuro);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.25rem;
+      white-space: nowrap;
+    }
+
+    .cart-line-unit {
+      color: #777;
+      font-size: 0.75rem;
+      margin-top: 5px;
+    }
+
+    .cart-quantity {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .cart-quantity button {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border: 1px solid var(--dorado);
+      background: white;
+      color: var(--rojo-oscuro);
+      font-weight: 800;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+
+    .cart-quantity span {
+      min-width: 18px;
+      text-align: center;
+      font-weight: 800;
+    }
+
+    .cart-drawer-footer {
+      background: var(--madera-oscura);
+      border-top: 3px solid var(--dorado);
+      padding: 16px 20px 22px;
+      color: white;
+    }
+
+    .cart-final-total {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .cart-final-total span:first-child {
+      font-size: 0.85rem;
+      opacity: 0.8;
+    }
+
+    .cart-final-total strong {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.9rem;
+      color: var(--dorado);
+    }
+
+    .cart-send-btn {
+      flex: 1;
+      background: var(--rojo-oscuro);
+      color: white;
+      border: none;
+      border-radius: 30px;
+      padding: 13px 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 7px 16px rgba(107, 15, 18, 0.24);
+      transition: background 0.18s ease, box-shadow 0.18s ease, transform 0.16s ease;
+    }
+
+    .cart-send-btn:hover {
+      background: #81151A;
+      box-shadow: 0 9px 20px rgba(107, 15, 18, 0.30);
+    }
+
+    .cart-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .cart-clear-btn {
+      border: 1px solid rgba(217, 180, 106, 0.85);
+      background: transparent;
+      color: var(--dorado);
+      border-radius: 30px;
+      padding: 12px 14px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800;
+      font-size: 0.76rem;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .cart-clear-btn:active,
+    .cart-send-btn:active {
+      transform: scale(0.97);
+    }
+
+    .badge {
+      background: var(--rojo-oscuro);
+      color: white;
+      font-size: 0.75rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      display: inline-block;
+      transition: transform 0.15s ease-in-out;
+    }
+
+    .badge.pop-animation {
+      animation: cartPop 0.3s ease-out;
+    }
+
+    @keyframes cartPop {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.4);
+        background-color: var(--dorado);
+        color: var(--madera-oscura);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 15px;
+      font-size: 0.85rem;
+      color: #666666;
+    }
+
+    .address-text {
+      color: #6B0F12;
+      font-weight: bold;
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+    }
+
+    .rif-text {
+      color: #111111;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.6px;
+      margin: 2px 0 8px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="skeleton-loader">
+    <div class="rueda-establo" aria-hidden="true"><span class="rueda-radios"></span></div>
+    <div class="loader-text">El Establo</div>
+    <div class="loader-subtext">Carne a la brasa</div>
+  </div>
+
+  <header>
+    <div class="logo-container">
+      <img src="assets/logo-el-establo.jpg" alt="El Establo Restaurante" width="90" height="90" fetchpriority="high" decoding="async">
+    </div>
+    <div class="nav-tabs-wrapper">
+      <div class="nav-tabs">
+        <button class="tab-btn active" onclick="showSection('carne-vara', this)">Carne en Vara</button>
+        <button class="tab-btn" onclick="showSection('cortes-grill', this)">Cortes Grill</button>
+        <button class="tab-btn" onclick="showSection('cachapas', this)">Cachapas</button>
+        <button class="tab-btn" onclick="showSection('platos', this)">Platos</button>
+        <button class="tab-btn" onclick="showSection('entradas', this)">Entradas y Postres</button>
+        <button class="tab-btn" onclick="showSection('ensaladas', this)">Ensaladas</button>
+        <button class="tab-btn" onclick="showSection('bebidas-licores', this)">Bebidas y Licores</button>
+        <button class="tab-btn" onclick="showSection('infantil', this)">Infantil</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- CARNE EN VARA -->
+    <div id="carne-vara" class="menu-section active">
+      <div class="section-title">Carne en Vara</div>
+      <div class="interactive-box">
+        <div class="selector-group">
+          <label>1. Elige el Corte:</label>
+          <input type="hidden" id="corte-select" value="Solomo">
+          <div class="choice-grid" id="cut-choice-grid" role="group" aria-label="Elige el corte">
+            <button type="button" class="choice-btn is-selected" onclick="selectCut('Solomo', this)" aria-pressed="true"><span class="choice-main">Solomo</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Punta Trasera', this)" aria-pressed="false"><span class="choice-main">Punta Trasera</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Lomo de Cerdo', this)" aria-pressed="false"><span class="choice-main">Lomo de Cerdo</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Costilla de Cerdo', this)" aria-pressed="false"><span class="choice-main">Costilla de Cerdo</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Pollo de Res', this)" aria-pressed="false"><span class="choice-main">Pollo de Res</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Ganso', this)" aria-pressed="false"><span class="choice-main">Ganso</span></button>
+            <button type="button" class="choice-btn" onclick="selectCut('Vacío', this)" aria-pressed="false"><span class="choice-main">Vacío</span></button>
+          </div>
+        </div>
+        <div class="selector-group">
+          <label>2. Elige el Tamaño:</label>
+          <input type="hidden" id="tamano-select" value="1KG">
+          <div class="choice-grid size-grid" id="size-choice-grid" role="group" aria-label="Elige el tamaño">
+            <button type="button" class="choice-btn is-selected" onclick="selectSize('1KG', this)" aria-pressed="true"><span class="choice-main">1 KG</span><span class="choice-detail">Completo</span></button>
+            <button type="button" class="choice-btn" onclick="selectSize('750GR', this)" aria-pressed="false"><span class="choice-main">750 g</span><span class="choice-detail">3/4</span></button>
+            <button type="button" class="choice-btn" onclick="selectSize('500GR', this)" aria-pressed="false"><span class="choice-main">500 g</span><span class="choice-detail">1/2</span></button>
+            <button type="button" class="choice-btn" onclick="selectSize('250GR', this)" aria-pressed="false"><span class="choice-main">250 g</span><span class="choice-detail">1/4</span></button>
+          </div>
+        </div>
+        <div class="selector-group doneness-selector" id="doneness-selector">
+          <label>3. Término de la Carne:</label>
+          <div class="choice-grid doneness-grid" id="doneness-choice-grid" role="group" aria-label="Elige el término de la carne">
+            <button type="button" class="choice-btn" onclick="selectDoneness('Tres cuartos', this)" aria-pressed="false"><span class="choice-main">Tres cuartos</span></button>
+            <button type="button" class="choice-btn is-selected" onclick="selectDoneness('Al punto', this)" aria-pressed="true"><span class="choice-main">Al punto</span></button>
+            <button type="button" class="choice-btn" onclick="selectDoneness('Bien cocida', this)" aria-pressed="false"><span class="choice-main">Bien cocida</span></button>
+          </div>
+        </div>
+        <div class="live-price-display">
+          <div style="font-size: 0.9rem; opacity: 0.9;">Precio Estimado:</div>
+          <div class="active-price-summary">
+          <div class="price-value" id="live-price" aria-live="polite">$55</div>
+            <div class="active-selection-count"><span id="active-meat-count">0</span><small>en pedido</small></div>
+          </div>
+
+          <div class="carne-actions">
+            <button class="big-add-btn" onclick="addCarneToOrder(this)">+ Agregar</button>
+            <button class="big-add-btn" onclick="removeCarneFromOrder()" style="background-color: #333333; border: 1px solid #D9B46A; color: #D9B46A;">- Restar</button>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 0.75rem; color: #888; font-style: italic; text-align: center; margin-top: -10px;">
+        - Los precios de la carne en vara pueden variar según el peso exacto.
+      </p>
+    </div>
+
+    <!-- CORTES GRILL -->
+    <div id="cortes-grill" class="menu-section">
+      <div class="section-title">Cortes Grill</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Churrasco de Solomo</span><span class="item-price">$16</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Churrasco de Solomo', 16)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Churrasco de Solomo', 16)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Lomito al Grill</span><span class="item-price">$16</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Lomito al Grill', 16)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Lomito al Grill', 16)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Punta Trasera</span><span class="item-price">$16</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Punta Trasera', 16)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Punta Trasera', 16)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Entraña</span><span class="item-price">$12</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Entraña', 12)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Entraña', 12)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Flat Iron</span><span class="item-price">$14</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Flat Iron', 14)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Flat Iron', 14)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Lomito de Cerdo</span><span class="item-price">$14</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Lomito de Cerdo', 14)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Lomito de Cerdo', 14)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Pechuga al Grill</span><span class="item-price">$12</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Pechuga al Grill', 12)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Pechuga al Grill', 12)">+</button>
+        </div>
+      </div>
+      <p style="font-size: 0.8rem; color: #666; font-style: italic; text-align: center; margin-top: 10px;">
+        (Todos los platos vienen acompañados de papa o yuca y ensalada)
+      </p>
+    </div>
+
+    <!-- CACHAPAS -->
+    <div id="cachapas" class="menu-section">
+      <div class="section-title">Cachapas</div>
+
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Cachapa con Queso Guayanés</span><span class="item-price">$12</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Cachapa Queso Guayanés', 12)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Cachapa Queso Guayanés', 12)">+</button>
+        </div>
+      </div>
+
+      <div class="interactive-box">
+        <div class="selector-group">
+          <label style="color: #000000; font-weight: 800;">Cachapa con Carnes</label>
+          <p style="font-size: 0.8rem; color: #666; margin-top: -8px; margin-bottom: 10px;">(1 proteína a elegir)</p>
+          <select id="proteina-cachapa-select" onchange="updateCachapaSelectionCounter()">
+            <option value="Carne en Vara">Carne en Vara</option>
+            <option value="Cerdo en Vara">Cerdo en Vara</option>
+            <option value="Cochino Frito">Cochino Frito</option>
+            <option value="Solomo">Solomo</option>
+          </select>
+        </div>
+        <div class="live-price-display" style="margin-top: 15px; padding: 10px;">
+          <div style="font-size: 0.9rem; color: #ffffff;">Precio:</div>
+          <div class="price-value" style="font-size: 1.2rem; color: #D9B46A;">$14</div>
+          <div class="quantity-control">
+            <button class="btn-minus" onclick="removeCachapaCarneFromOrder()" style="border: 1px solid #ffffff; color: #ffffff; background: none;">-</button>
+            <span id="cachapa-selection-count" class="cachapa-selection-count">0</span>
+            <button class="btn-plus" onclick="addCachapaCarneToOrder()" style="border: 1px solid #D9B46A; color: #D9B46A; background: none;">+</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PLATOS -->
+    <div id="platos" class="menu-section">
+      <div class="section-title">Platos Principales</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Parrilla Establo (Familiar)</span><span class="item-price">$55</span></div>
+          <div class="item-desc">Chorizo, Papitas, Yuca, Arepitas, Ensalada criolla.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Parrilla Establo (Fam)', 55)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Parrilla Establo (Fam)', 55)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Parrilla Establo (Media)</span><span class="item-price">$30</span></div>
+          <div class="item-desc">1/2 Kilo. La mejor selección de carnes para compartir.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Parrilla Establo (Med)', 30)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Parrilla Establo (Med)', 30)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Brocheta Establo</span><span class="item-price">$15</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Brocheta Establo', 15)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Brocheta Establo', 15)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Bowl Parrillero</span><span class="item-price">$17</span></div>
+          <div class="item-desc">300 gramos proteína, quesitos fritos, ensalada césar y patacones.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Bowl Parrillero', 17)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Bowl Parrillero', 17)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Patacones</span><span class="item-price">$12</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Patacones', 12)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Patacones', 12)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENTRADAS -->
+    <div id="entradas" class="menu-section">
+      <div class="section-title">Entradas</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Hervido de Res</span><span class="item-price">$8</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Hervido de Res', 8)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Hervido de Res', 8)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Medio Hervido</span><span class="item-price">$5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Medio Hervido', 5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Medio Hervido', 5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Consomé</span><span class="item-price">$5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Consomé', 5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Consomé', 5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Picadillo Llanero</span><span class="item-price">$8</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Picadillo Llanero', 8)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Picadillo Llanero', 8)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Medio Picadillo</span><span class="item-price">$5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Medio Picadillo', 5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Medio Picadillo', 5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Queso Teleado</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Queso Teleado', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Queso Teleado', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Queso Frito</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Queso Frito', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Queso Frito', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Queso Asado</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Queso Asado', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Queso Asado', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Servicio de Tostones</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Servicio de Tostones', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Servicio de Tostones', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Servicio de Arepas</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Servicio de Arepas', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Servicio de Arepas', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Papas Francesas</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Papas Francesas', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Papas Francesas', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Tajadas con Queso</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Tajadas con Queso', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Tajadas con Queso', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Servicio de Chorizo</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Servicio de Chorizo', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Servicio de Chorizo', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Servicio de Morcilla</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Servicio de Morcilla', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Servicio de Morcilla', 6)">+</button>
+        </div>
+      </div>
+
+      <div class="section-title">Postres</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Quesillo</span><span class="item-price">$5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Quesillo', 5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Quesillo', 5)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ENSALADAS -->
+    <div id="ensaladas" class="menu-section">
+      <div class="section-title">Ensaladas</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Criolla</span><span class="item-price">$10</span></div>
+          <div class="item-desc">Aguacate, Lechuga, Cebolla, Tomate.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Ensalada Criolla', 10)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Ensalada Criolla', 10)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">César</span><span class="item-price">$11</span></div>
+          <div class="item-desc">Queso, lechuga, crótones, tocineta, queso parmesano y aderezo.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Ensalada César', 11)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Ensalada César', 11)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">César con Pollo/Cerdo</span><span class="item-price">$13</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('César Mixta', 13)">-</button>
+          <button class="btn-plus" onclick="addToOrder('César Mixta', 13)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Palmito Especial</span><span class="item-price">$11</span></div>
+          <div class="item-desc">Lechuga, tomate, cebolla, aguacate, palmito, vinagreta.</div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Ensalada Palmito', 11)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Ensalada Palmito', 11)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEBIDAS Y LICORES -->
+    <div id="bebidas-licores" class="menu-section">
+      <div class="section-title">Bebidas y Licores</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Agua</span><span class="item-price">$2</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Agua', 2)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Agua', 2)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Vaso Agua Panela</span><span class="item-price">$2</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Vaso Agua Panela', 2)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Vaso Agua Panela', 2)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Media Jarra Agua Panela</span><span class="item-price">$5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Media Jarra Agua Panela', 5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Media Jarra Agua Panela', 5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Jarra Agua Panela</span><span class="item-price">$8</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Jarra Agua Panela', 8)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Jarra Agua Panela', 8)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Jugos Naturales</span><span class="item-price">$4</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Jugos Naturales', 4)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Jugos Naturales', 4)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Refresco 1.5 Lts</span><span class="item-price">$3</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Refresco 1.5L', 3)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Refresco 1.5L', 3)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Refresco 2 Lts</span><span class="item-price">$4</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Refresco 2L', 4)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Refresco 2L', 4)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Café Pequeño</span><span class="item-price">$1.5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Café P', 1.5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Café P', 1.5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Botella de Vino</span><span class="item-price">$20</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Botella Vino', 20)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Botella Vino', 20)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Copa de Vino</span><span class="item-price">$4</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Copa Vino', 4)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Copa Vino', 4)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Jarra de Refajo</span><span class="item-price">$6</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Jarra Refajo', 6)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Jarra Refajo', 6)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Cerveza</span><span class="item-price">$1.5</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Cerveza', 1.5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Cerveza', 1.5)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Jarra Sangría</span><span class="item-price">$15</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Jarra Sangría', 15)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Jarra Sangría', 15)">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFANTIL -->
+    <div id="infantil" class="menu-section">
+      <div class="section-title">Menú Infantil</div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Tenders de Pollo</span><span class="item-price">$10</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Tenders de Pollo', 10)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Tenders de Pollo', 10)">+</button>
+        </div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Picada Infantil</span><span class="item-price">$16</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Picada Infantil', 16)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Picada Infantil', 16)">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p class="address-text">El Establo Restaurante</p>
+    <p class="rif-text">RIF J-29414057-2</p>
+    <p style="color: #555; font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">
+      Avenida Guayana, esquina Barrio Colón. San Cristóbal, Táchira.
+    </p>
+    <p>© 2026 Todos los derechos reservados</p>
+  </footer>
+
+  <div id="quantity-feedback" class="quantity-feedback" role="status" aria-live="polite"></div>
+
+  <div class="order-bar">
+    <div>
+      <div style="font-size: 0.8rem; opacity: 0.8;">Total de tu Pedido:</div>
+      <div class="total-amount" id="total-order-amount">0</div>
+    </div>
+    <a href="#" class="whatsapp-btn" onclick="openCart(event)">
+      Enviar Pedido <span class="badge" id="order-badge">0</span>
+    </a>
+  </div>
+
+  <div id="cart-backdrop" class="cart-backdrop" onclick="closeCart()"></div>
+
+  <aside id="cart-drawer" class="cart-drawer" aria-label="Resumen detallado de tu pedido">
+    <div class="cart-drawer-header">
+      <div class="cart-drawer-title">Tu Pedido</div>
+      <button class="close-cart-btn" onclick="closeCart()" aria-label="Cerrar carrito">×</button>
+    </div>
+
+    <div id="cart-items" class="cart-items"></div>
+
+    <div class="cart-drawer-footer">
+      <div class="cart-final-total">
+        <span>Total de tu pedido:</span>
+        <strong id="cart-drawer-total">0</strong>
+      </div>
+      <div class="cart-actions">
+        <button class="cart-clear-btn" onclick="clearCart()">Reiniciar pedido</button>
+        <button class="cart-send-btn" onclick="sendWhatsApp(event)">Enviar por WhatsApp</button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+    const CART_STORAGE_KEY = 'el-establo-carrito-v2';
+    const LEGACY_CART_STORAGE_KEY = 'el-establo-carrito-v1';
+    let currentTotal = 0;
+    let itensPedidos = [];
+    let selectedDoneness = 'Al punto';
+    const cutsWithDoneness = new Set(['Solomo', 'Punta Trasera', 'Pollo de Res', 'Ganso', 'Vacío']);
+
+    function saveOrderToStorage() {
+      localStorage.setItem(CART_STORAGE_KEY, JSON.stringify({
+        currentTotal: currentTotal,
+        itensPedidos: itensPedidos
+      }));
+    }
+
+    function loadOrderFromStorage() {
+      try {
+        const savedOrder = JSON.parse(localStorage.getItem(CART_STORAGE_KEY));
+        if (!savedOrder || !Array.isArray(savedOrder.itensPedidos)) {
+          // El pedido anterior usaba precios y categorías que ya fueron corregidos.
+          // Se descarta una vez para que el cliente empiece con un total limpio.
+          localStorage.removeItem(LEGACY_CART_STORAGE_KEY);
+          return;
+        }
+
+        itensPedidos = savedOrder.itensPedidos.map(item => ({
+          name: item.name,
+          price: Number(item.price)
+        }));
+        currentTotal = itensPedidos.reduce((total, item) => total + item.price, 0);
+      } catch (error) {
+        console.warn('No se pudo recuperar el pedido guardado.', error);
+        currentTotal = 0;
+        itensPedidos = [];
+      }
+    }
+
+    function addCachapaCarneToOrder() {
+      const selectedCachapa = getSelectedCachapa();
+      addToOrder(selectedCachapa.name, selectedCachapa.price);
+    }
+
+    function removeCachapaCarneFromOrder() {
+      const selectedCachapa = getSelectedCachapa();
+      const index = itensPedidos.map(item => item.name).lastIndexOf(selectedCachapa.name);
+      if (index === -1) return;
+
+      currentTotal -= itensPedidos[index].price;
+      if (currentTotal < 0) currentTotal = 0;
+      itensPedidos.splice(index, 1);
+      saveOrderToStorage();
+      updateUI(false, selectedCachapa.name);
+      triggerHaptic('remove');
+    }
+
+    function getSelectedCachapa() {
+      const proteina = document.getElementById('proteina-cachapa-select').value;
+      return { name: `Cachapa c/ ${proteina}`, price: 14 };
+    }
+
+    function updateCachapaSelectionCounter() {
+      const counter = document.getElementById('cachapa-selection-count');
+      if (!counter) return;
+      const selectedCachapa = getSelectedCachapa();
+      counter.textContent = itensPedidos.filter(item => item.name === selectedCachapa.name).length;
+    }
+    const preciosCarne = {
+      "Solomo": {
+        "1KG": 55,
+        "750GR": 40,
+        "500GR": 30,
+        "250GR": 18
+      },
+      "Punta Trasera": {
+        "1KG": 55,
+        "750GR": 40,
+        "500GR": 30,
+        "250GR": 18
+      },
+      "Lomo de Cerdo": {
+        "1KG": 55,
+        "750GR": 40,
+        "500GR": 30,
+        "250GR": 18
+      },
+      "Costilla de Cerdo": {
+        "1KG": 55,
+        "750GR": 40,
+        "500GR": 30,
+        "250GR": 18
+      },
+      "Pollo de Res": {
+        "1KG": 35,
+        "750GR": 28,
+        "500GR": 20,
+        "250GR": 12
+      },
+      "Ganso": {
+        "1KG": 35,
+        "750GR": 28,
+        "500GR": 20,
+        "250GR": 12
+      },
+      "Vacío": {
+        "1KG": 45,
+        "750GR": 39,
+        "500GR": 26,
+        "250GR": 13
+      }
+    };
+
+    function showSection(sectionId, btn) {
+      document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+      let targetId = sectionId;
+      const targetSection = document.getElementById(targetId);
+      if (targetSection) targetSection.classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    function updateLivePrice() {
+      const corte = document.getElementById('corte-select').value;
+      const tamano = document.getElementById('tamano-select').value;
+      const precio = preciosCarne[corte][tamano];
+      const livePrice = document.getElementById('live-price');
+      livePrice.innerText = formatPrice(precio);
+      livePrice.classList.remove('price-pulse');
+      void livePrice.offsetWidth;
+      livePrice.classList.add('price-pulse');
+      updateActiveMeatCounter();
+    }
+
+    function selectCut(corte, button) {
+      document.getElementById('corte-select').value = corte;
+      document.querySelectorAll('#cut-choice-grid .choice-btn').forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      updateDonenessVisibility(corte);
+      updateLivePrice();
+    }
+
+    function selectSize(tamano, button) {
+      document.getElementById('tamano-select').value = tamano;
+      document.querySelectorAll('#size-choice-grid .choice-btn').forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+      updateLivePrice();
+    }
+
+    function selectDoneness(doneness, button) {
+      selectedDoneness = doneness;
+      document.querySelectorAll('#doneness-choice-grid .choice-btn').forEach(item => {
+        const selected = item === button;
+        item.classList.toggle('is-selected', selected);
+        item.setAttribute('aria-pressed', String(selected));
+      });
+    }
+
+    function updateDonenessVisibility(corte) {
+      document.getElementById('doneness-selector').hidden = !cutsWithDoneness.has(corte);
+    }
+
+    function addCarneToOrder(button) {
+      const activeMeat = getActiveMeatSelection();
+      addToOrder(activeMeat.name, activeMeat.price);
+      showAddSuccess(button);
+    }
+
+    function showAddSuccess(button) {
+      if (!button) return;
+      const originalLabel = button.innerHTML;
+      button.classList.add('add-success');
+      button.innerHTML = '<span class="add-success-check">✓</span>AGREGADO';
+      setTimeout(() => {
+        button.classList.remove('add-success');
+        button.innerHTML = originalLabel;
+      }, 620);
+    }
+
+    function removeCarneFromOrder() {
+      const activeMeat = getActiveMeatSelection();
+      let index = -1;
+
+      for (let i = itensPedidos.length - 1; i >= 0; i -= 1) {
+        const isExactSelection = itensPedidos[i].name === activeMeat.name;
+        const isOlderSelection = itensPedidos[i].name.startsWith(`${activeMeat.corte} (${activeMeat.tamano}`);
+        if (isExactSelection || isOlderSelection) {
+          index = i;
+          break;
+        }
+      }
+
+      if (index === -1) return;
+      currentTotal -= itensPedidos[index].price;
+      if (currentTotal < 0) currentTotal = 0;
+      itensPedidos.splice(index, 1);
+      saveOrderToStorage();
+      updateUI(false, activeMeat.name);
+      triggerHaptic('remove');
+    }
+
+    function getActiveMeatSelection() {
+      const corte = document.getElementById('corte-select').value;
+      const tamano = document.getElementById('tamano-select').value;
+      const price = preciosCarne[corte][tamano];
+      const term = cutsWithDoneness.has(corte) ? `, ${selectedDoneness}` : '';
+      return {
+        corte,
+        tamano,
+        price,
+        name: `${corte} (${tamano}${term})`
+      };
+    }
+
+    function updateActiveMeatCounter() {
+      const counter = document.getElementById('active-meat-count');
+      if (!counter) return;
+      const activeMeat = getActiveMeatSelection();
+      const quantity = itensPedidos.filter(item => item.name === activeMeat.name).length;
+      counter.textContent = quantity;
+    }
+
+    function addToOrder(name, price) {
+      currentTotal += price;
+      itensPedidos.push({
+        name: name,
+        price: price
+      });
+      saveOrderToStorage();
+      updateUI(true, name);
+      triggerHaptic('add');
+    }
+
+    function removeFromOrder(name, price) {
+      const index = itensPedidos.map(item => item.name).lastIndexOf(name);
+      if (index !== -1) {
+        const removedItem = itensPedidos[index];
+        currentTotal -= Number(removedItem.price);
+        if (currentTotal < 0) currentTotal = 0;
+        itensPedidos.splice(index, 1);
+        saveOrderToStorage();
+        updateUI(false, name);
+        triggerHaptic('remove');
+      } else {
+        showQuantityFeedback(name);
+      }
+    }
+
+    function clearCart() {
+      if (!confirm('¿Deseas reiniciar todo el pedido?')) return;
+      itensPedidos = [];
+      currentTotal = 0;
+      localStorage.removeItem(CART_STORAGE_KEY);
+      updateUI(false);
+    }
+
+    function formatPrice(amount) {
+      const value = Number(amount) || 0;
+      return Number.isInteger(value) ? String(value) : value.toFixed(2);
+    }
+
+    function triggerHaptic(action) {
+      if (!navigator.vibrate) return;
+      navigator.vibrate(action === 'add' ? 12 : 8);
+    }
+
+    function animateNumber(node) {
+      if (!node) return;
+      node.classList.remove('is-updating');
+      void node.offsetWidth;
+      node.classList.add('is-updating');
+    }
+
+    function updateProductQuantityCounters(changedName) {
+      document.querySelectorAll('.menu-item .quantity-control').forEach(control => {
+        const productName = control.dataset.orderName;
+        const counter = control.querySelector('.product-quantity');
+        if (!productName || !counter) return;
+        const quantity = itensPedidos.filter(item => item.name === productName).length;
+        counter.textContent = quantity;
+        if (productName === changedName) {
+          animateNumber(counter);
+          const card = control.closest('.menu-item');
+          card.classList.remove('is-updated');
+          void card.offsetWidth;
+          card.classList.add('is-updated');
+        }
+      });
+    }
+
+    let quantityFeedbackTimer;
+    function showQuantityFeedback(name) {
+      const control = [...document.querySelectorAll('.menu-item .quantity-control')]
+        .find(item => item.dataset.orderName === name);
+      if (control) {
+        control.classList.remove('is-empty');
+        void control.offsetWidth;
+        control.classList.add('is-empty');
+      }
+      const feedback = document.getElementById('quantity-feedback');
+      if (!feedback) return;
+      const summary = itensPedidos.length > 0
+        ? `“${name}” está en 0. Tu pedido tiene ${itensPedidos.length} artículo${itensPedidos.length === 1 ? '' : 's'} de otra categoría; ábrelo para restarlos.`
+        : `“${name}” está en 0. Primero toca + para agregar este producto.`;
+      feedback.textContent = summary;
+      feedback.classList.add('show');
+      if (navigator.vibrate) navigator.vibrate([8, 35, 8]);
+      clearTimeout(quantityFeedbackTimer);
+      quantityFeedbackTimer = setTimeout(() => feedback.classList.remove('show'), 2800);
+    }
+
+    function updateUI(triggerAnimation, changedName) {
+      const totalNode = document.getElementById('total-order-amount');
+      totalNode.innerText = formatPrice(currentTotal);
+      animateNumber(totalNode);
+      const badge = document.getElementById('order-badge');
+      badge.innerText = itensPedidos.length;
+      // El panel se actualiza al abrirse. Mientras está cerrado, no hace falta
+      // reconstruirlo por cada toque de + o −; esto evita lentitud con pedidos grandes.
+      if (document.getElementById('cart-drawer').classList.contains('show')) {
+        renderDetailedCart();
+      }
+      updateActiveMeatCounter();
+      updateCachapaSelectionCounter();
+      updateProductQuantityCounters(changedName);
+      if (triggerAnimation) {
+        badge.classList.remove('pop-animation');
+        void badge.offsetWidth;
+        badge.classList.add('pop-animation');
+      }
+    }
+
+    function getGroupedOrderItems() {
+      const groupedItems = {};
+      itensPedidos.forEach(item => {
+        const key = `${item.name}||${item.price}`;
+        if (!groupedItems[key]) {
+          groupedItems[key] = { name: item.name, price: item.price, quantity: 0 };
+        }
+        groupedItems[key].quantity += 1;
+      });
+      return Object.values(groupedItems);
+    }
+
+    function renderDetailedCart() {
+      const cartItemsContainer = document.getElementById('cart-items');
+      const cartDrawerTotal = document.getElementById('cart-drawer-total');
+      if (!cartItemsContainer || !cartDrawerTotal) return;
+
+      cartDrawerTotal.innerText = formatPrice(currentTotal);
+      animateNumber(cartDrawerTotal);
+      const groupedItems = getGroupedOrderItems();
+
+      if (groupedItems.length === 0) {
+        cartItemsContainer.innerHTML = '<p class="cart-empty">Tu pedido está vacío. Agrega algo delicioso del menú.</p>';
+        return;
+      }
+
+      cartItemsContainer.innerHTML = groupedItems.map(item => `
+        <div class="cart-line">
+          <div class="cart-line-top">
+            <div>
+              <div class="cart-line-name">${item.name}</div>
+              <div class="cart-line-unit">${formatPrice(item.price)} cada uno</div>
+            </div>
+            <div class="cart-line-subtotal">${formatPrice(item.price * item.quantity)}</div>
+          </div>
+          <div class="cart-line-bottom">
+            <div class="cart-quantity">
+              <button onclick='removeFromOrder(${JSON.stringify(item.name)}, ${item.price})' aria-label="Restar ${item.name}">−</button>
+              <span>${item.quantity}</span>
+              <button onclick='addToOrder(${JSON.stringify(item.name)}, ${item.price})' aria-label="Agregar ${item.name}">+</button>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openCart(event) {
+      if (event) event.preventDefault();
+      renderDetailedCart();
+      document.getElementById('cart-backdrop').classList.add('show');
+      document.getElementById('cart-drawer').classList.add('show');
+      document.body.classList.add('cart-is-open');
+    }
+
+    function closeCart() {
+      document.getElementById('cart-backdrop').classList.remove('show');
+      document.getElementById('cart-drawer').classList.remove('show');
+      document.body.classList.remove('cart-is-open');
+    }
+
+    function enhanceProductControls() {
+      document.querySelectorAll('.menu-item .quantity-control').forEach(control => {
+        if (control.querySelector('.product-quantity')) return;
+        const addButton = control.querySelector('.btn-plus');
+        const action = addButton?.getAttribute('onclick') || '';
+        const match = action.match(/addToOrder\('([^']+)'/);
+        if (!match) return;
+        control.dataset.orderName = match[1];
+        const counter = document.createElement('span');
+        counter.className = 'product-quantity';
+        counter.setAttribute('aria-label', 'Cantidad en el pedido');
+        counter.textContent = '0';
+        control.insertBefore(counter, addButton);
+      });
+    }
+
+    function stripCurrencySymbols() {
+      document.querySelectorAll('.item-price, .price-value, #live-price, #total-order-amount, #cart-drawer-total').forEach(node => {
+        node.textContent = node.textContent.replace(/\$/g, '');
+      });
+    }
+
+    function sendWhatsApp(event) {
+      event.preventDefault();
+      if (itensPedidos.length === 0) {
+        alert("Por favor, selecciona al menos un producto antes de enviar tu pedido.");
+        return;
+      }
+      const phone = "584147090704";
+      let msg = " *Pedido el Establo:*\n\n";
+      const itemCounts = {};
+      itensPedidos.forEach(it => {
+        const key = `${it.name}||${formatPrice(it.price)}`;
+        itemCounts[key] = (itemCounts[key] || 0) + 1;
+      });
+      let index = 1;
+      for (const key in itemCounts) {
+        const [name, price] = key.split('||');
+        msg += `${index}. ${itemCounts[key]}x ${name} - *${price}*\n`;
+        index++;
+      }
+      msg += `\nTotal Estimado: *${formatPrice(currentTotal)}*`;
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+    window.addEventListener('DOMContentLoaded', function() {
+      enhanceProductControls();
+      stripCurrencySymbols();
+      loadOrderFromStorage();
+      updateDonenessVisibility(document.getElementById('corte-select').value);
+      updateLivePrice();
+      updateUI(false);
+      const loader = document.getElementById('skeleton-loader');
+      requestAnimationFrame(() => loader.classList.add('is-ready'));
+      setTimeout(() => loader.remove(), 120);
+    });
+  </script>
+</body>
+
+</html>
