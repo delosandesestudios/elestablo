@@ -1383,6 +1383,217 @@
       letter-spacing: 0.6px;
       margin: 2px 0 8px;
     }
+
+    /* Estilo El Establo: especiales y contacto en capas claras, con borgoña y dorado como guía visual. */
+    .section-intro {
+      margin: -2px 0 14px;
+      color: #5d5855;
+      font-size: 0.9rem;
+      line-height: 1.45;
+    }
+
+    #especiales .promo-card {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 124px;
+      grid-template-rows: auto auto;
+      align-items: start;
+      column-gap: 12px;
+      padding: 16px;
+      background: linear-gradient(120deg, #ffffff 0%, #fffdf8 100%);
+    }
+
+    #especiales .item-info {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      padding-right: 0;
+    }
+
+    #especiales .item-header {
+      grid-template-columns: minmax(0, 1fr) 4.3rem;
+      min-height: 42px;
+      margin-bottom: 2px;
+      align-items: start;
+    }
+
+    #especiales .item-price {
+      color: var(--rojo-oscuro);
+      font-size: 1.25rem;
+      letter-spacing: 0.3px;
+    }
+
+    #especiales .item-desc {
+      margin-top: 2px;
+      font-size: 0.88rem;
+    }
+
+    .promo-window,
+    .promo-note {
+      display: inline-flex;
+      width: fit-content;
+      margin-top: 9px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 0.25px;
+      text-transform: uppercase;
+    }
+
+    .promo-window {
+      border: 1px solid rgba(217, 180, 106, 0.8);
+      color: var(--rojo-oscuro);
+      background: rgba(217, 180, 106, 0.12);
+    }
+
+    .promo-note {
+      border: 1px solid rgba(107, 15, 18, 0.2);
+      color: var(--rojo-oscuro);
+      background: rgba(107, 15, 18, 0.06);
+    }
+
+    #especiales .quantity-control {
+      grid-column: 2;
+      grid-row: 1;
+      min-height: 42px;
+      margin: 0;
+      align-self: start;
+      justify-content: flex-end;
+    }
+
+    .contact-layout {
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-card,
+    .map-card,
+    .review-card {
+      border: 1.5px solid rgba(217, 180, 106, 0.42);
+      border-radius: 12px;
+      background: #ffffff;
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.035);
+      overflow: hidden;
+    }
+
+    .contact-card {
+      padding: 18px;
+    }
+
+    .contact-kicker {
+      margin-bottom: 8px;
+      color: var(--dorado);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.7px;
+      text-transform: uppercase;
+    }
+
+    .contact-card h3,
+    .review-card h3 {
+      color: #111111;
+      font-size: 1.05rem;
+      line-height: 1.2;
+      margin-bottom: 7px;
+      text-transform: uppercase;
+    }
+
+    .contact-card p,
+    .review-card p {
+      color: #5a5653;
+      font-size: 0.88rem;
+      line-height: 1.48;
+    }
+
+    .contact-meta {
+      display: grid;
+      gap: 11px;
+      margin-top: 16px;
+    }
+
+    .contact-meta-row {
+      padding-top: 11px;
+      border-top: 1px solid rgba(217, 180, 106, 0.32);
+    }
+
+    .contact-meta-row strong {
+      display: block;
+      margin-bottom: 3px;
+      color: var(--rojo-oscuro);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.35px;
+      text-transform: uppercase;
+    }
+
+    .map-frame {
+      display: block;
+      width: 100%;
+      min-height: 220px;
+      border: 0;
+      background: #eee8dc;
+    }
+
+    .map-action,
+    .review-action {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 11px 16px;
+      color: white;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-align: center;
+      text-decoration: none;
+      transition: transform 0.16s ease, background 0.16s ease;
+    }
+
+    .map-action {
+      background: var(--madera-oscura);
+    }
+
+    .review-card {
+      padding: 18px;
+      border-color: rgba(107, 15, 18, 0.25);
+      background: linear-gradient(135deg, #fffdf9 0%, #fbf2e2 100%);
+    }
+
+    .review-action {
+      margin-top: 14px;
+      border-radius: 8px;
+      background: var(--rojo-oscuro);
+    }
+
+    .map-action:active,
+    .review-action:active {
+      transform: scale(0.98);
+    }
+
+    @media (min-width: 768px) {
+      #especiales .promo-card {
+        grid-template-columns: minmax(0, 1fr) 118px;
+        max-width: 760px;
+      }
+
+      .contact-layout {
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+        align-items: start;
+      }
+
+      .review-card {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: 24px;
+        align-items: center;
+      }
+
+      .review-action {
+        width: 220px;
+        margin: 0;
+      }
+    }
   </style>
 </head>
 
@@ -1407,6 +1618,8 @@
         <button class="tab-btn" onclick="showSection('ensaladas', this)">Ensaladas</button>
         <button class="tab-btn" onclick="showSection('bebidas-licores', this)">Bebidas y Licores</button>
         <button class="tab-btn" onclick="showSection('infantil', this)">Infantil</button>
+        <button class="tab-btn" onclick="showSection('especiales', this)">Especiales</button>
+        <button class="tab-btn" onclick="showSection('contacto', this)">Contacto</button>
       </div>
     </div>
   </header>
@@ -1956,6 +2169,74 @@
         </div>
       </div>
     </div>
+
+    <!-- ESPECIALES -->
+    <div id="especiales" class="menu-section">
+      <div class="section-title">Especiales de la Semana</div>
+      <p class="section-intro">Disponibles de martes a viernes.</p>
+
+      <div class="promo-card menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Office Lunch</span><span class="item-price">REF 8</span></div>
+          <p class="item-desc">180 gramos de proteína, sopa del día, ensalada y contornos.</p>
+          <span class="promo-window">Martes a viernes</span>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Office Lunch', 8)" aria-label="Restar Office Lunch">-</button>
+          <button class="btn-plus" onclick="addToOrder('Office Lunch', 8)" aria-label="Agregar Office Lunch">+</button>
+        </div>
+      </div>
+
+      <div class="promo-card menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Dúo para Compartir</span><span class="item-price">REF 12</span></div>
+          <p class="item-desc">1 Picadillo Llanero, arepita de yuca, 1 consomé de res y pieza de costilla de res.</p>
+          <span class="promo-note">Solo por delivery</span>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Dúo para Compartir', 12)" aria-label="Restar Dúo para Compartir">-</button>
+          <button class="btn-plus" onclick="addToOrder('Dúo para Compartir', 12)" aria-label="Agregar Dúo para Compartir">+</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTACTO -->
+    <div id="contacto" class="menu-section">
+      <div class="section-title">Contacto y Ubicación</div>
+      <p class="section-intro">Visítanos en San Cristóbal o abre la ubicación para llegar fácilmente.</p>
+
+      <div class="contact-layout">
+        <section class="contact-card" aria-labelledby="contacto-titulo">
+          <p class="contact-kicker">El Establo Restaurante</p>
+          <h3 id="contacto-titulo">Estamos para atenderte</h3>
+          <p>Avenida Guayana, esquina Barrio Colón, San Cristóbal 5001, Táchira, Venezuela.</p>
+          <div class="contact-meta">
+            <div class="contact-meta-row">
+              <strong>Horario</strong>
+              <p>Todos los días, 11:00 a. m. a 6:00 p. m.</p>
+            </div>
+            <div class="contact-meta-row">
+              <strong>Pedidos por WhatsApp</strong>
+              <p>Usa el botón “Enviar Pedido” para preparar tu pedido y enviarlo directamente.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="map-card" aria-label="Mapa de ubicación de El Establo">
+          <iframe class="map-frame" title="Ubicación de El Establo Restaurante" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=El%20Establo%2C%20esquina%20Barrio%20Colon%2C%20Av.%20Guayana%2C%20San%20Cristobal%205001%2C%20Tachira%2C%20Venezuela&output=embed"></iframe>
+          <a class="map-action" href="https://share.google/wD4oWtGPaXSBQYXgI" target="_blank" rel="noopener noreferrer">Abrir ubicación en Google Maps</a>
+        </section>
+
+        <section class="review-card" aria-labelledby="review-titulo">
+          <div>
+            <p class="contact-kicker">Tu opinión cuenta</p>
+            <h3 id="review-titulo">¿Visitaste El Establo?</h3>
+            <p>Tu calificación en Google ayuda a más personas a conocer el restaurante.</p>
+          </div>
+          <a class="review-action" href="https://share.google/wD4oWtGPaXSBQYXgI" target="_blank" rel="noopener noreferrer">Calificar en Google</a>
+        </section>
+      </div>
+    </div>
   </div>
 
   <footer>
@@ -2111,6 +2392,7 @@
       const targetSection = document.getElementById(targetId);
       if (targetSection) targetSection.classList.add('active');
       btn.classList.add('active');
+      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
