@@ -1369,6 +1369,51 @@
       color: #666666;
     }
 
+    .footer-access-list {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin: 4px 0 16px;
+    }
+
+    .footer-info-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 6px 10px;
+      border: none;
+      background: transparent;
+      color: var(--rojo-oscuro);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.45px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.16s ease, color 0.16s ease, opacity 0.16s ease;
+    }
+
+    .footer-info-button:active {
+      transform: scale(0.97);
+      color: #9b641e;
+    }
+
+    .footer-info-separator {
+      width: 1px;
+      height: 24px;
+      background: linear-gradient(to bottom, transparent, var(--dorado), transparent);
+      opacity: 0.9;
+    }
+
+    @media (max-width: 390px) {
+      .footer-info-button {
+        padding: 6px 8px;
+        font-size: 1rem;
+      }
+    }
+
     .address-text {
       color: #6B0F12;
       font-weight: bold;
@@ -1611,6 +1656,7 @@
     <div class="nav-tabs-wrapper">
       <div class="nav-tabs">
         <button class="tab-btn active" onclick="showSection('carne-vara', this)">Carne en Vara</button>
+        <button class="tab-btn" onclick="showSection('especiales', this)">Especiales</button>
         <button class="tab-btn" onclick="showSection('cortes-grill', this)">Cortes Grill</button>
         <button class="tab-btn" onclick="showSection('cachapas', this)">Cachapas</button>
         <button class="tab-btn" onclick="showSection('platos', this)">Platos</button>
@@ -1618,8 +1664,6 @@
         <button class="tab-btn" onclick="showSection('ensaladas', this)">Ensaladas</button>
         <button class="tab-btn" onclick="showSection('bebidas-licores', this)">Bebidas y Licores</button>
         <button class="tab-btn" onclick="showSection('infantil', this)">Infantil</button>
-        <button class="tab-btn" onclick="showSection('especiales', this)">Especiales</button>
-        <button class="tab-btn" onclick="showSection('contacto', this)">Contacto</button>
       </div>
     </div>
   </header>
@@ -2211,7 +2255,7 @@
           <h3 id="contacto-titulo">Estamos para atenderte</h3>
           <p>Avenida Guayana, esquina Barrio Colón, San Cristóbal 5001, Táchira, Venezuela.</p>
           <div class="contact-meta">
-            <div class="contact-meta-row">
+            <div class="contact-meta-row" id="contact-hours">
               <strong>Horario</strong>
               <p>Todos los días, 11:00 a. m. a 6:00 p. m.</p>
             </div>
@@ -2222,12 +2266,12 @@
           </div>
         </section>
 
-        <section class="map-card" aria-label="Mapa de ubicación de El Establo">
+        <section class="map-card" id="contact-map" aria-label="Mapa de ubicación de El Establo">
           <iframe class="map-frame" title="Ubicación de El Establo Restaurante" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=El%20Establo%2C%20esquina%20Barrio%20Colon%2C%20Av.%20Guayana%2C%20San%20Cristobal%205001%2C%20Tachira%2C%20Venezuela&output=embed"></iframe>
           <a class="map-action" href="https://share.google/wD4oWtGPaXSBQYXgI" target="_blank" rel="noopener noreferrer">Abrir ubicación en Google Maps</a>
         </section>
 
-        <section class="review-card" aria-labelledby="review-titulo">
+        <section class="review-card" id="contact-review" aria-labelledby="review-titulo">
           <div>
             <p class="contact-kicker">Tu opinión cuenta</p>
             <h3 id="review-titulo">¿Visitaste El Establo?</h3>
@@ -2245,6 +2289,13 @@
     <p style="color: #555; font-size: 0.9rem; margin-bottom: 15px; font-weight: 500;">
       Avenida Guayana, esquina Barrio Colón. San Cristóbal, Táchira.
     </p>
+    <div class="footer-access-list" aria-label="Información del restaurante">
+      <a class="footer-info-button" href="https://share.google/wD4oWtGPaXSBQYXgI" target="_blank" rel="noopener noreferrer">Ubicación</a>
+      <span class="footer-info-separator" aria-hidden="true"></span>
+      <button class="footer-info-button" type="button" onclick="openContactDetail('contact-hours')">Horarios</button>
+      <span class="footer-info-separator" aria-hidden="true"></span>
+      <a class="footer-info-button" href="https://share.google/wD4oWtGPaXSBQYXgI" target="_blank" rel="noopener noreferrer">Calificación</a>
+    </div>
     <p>© 2026 Todos los derechos reservados</p>
   </footer>
 
@@ -2391,11 +2442,23 @@
       let targetId = sectionId;
       const targetSection = document.getElementById(targetId);
       if (targetSection) targetSection.classList.add('active');
-      btn.classList.add('active');
-      btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      if (btn) {
+        btn.classList.add('active');
+        btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      }
       window.scrollTo({
         top: 0,
         behavior: 'smooth'
+      });
+    }
+
+    function openContactDetail(targetId) {
+      document.querySelectorAll('.menu-section').forEach(section => section.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(tab => tab.classList.remove('active'));
+      document.getElementById('contacto').classList.add('active');
+      requestAnimationFrame(() => {
+        const target = document.getElementById(targetId);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       });
     }
 
