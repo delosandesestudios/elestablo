@@ -31,7 +31,7 @@
     body {
       background-color: var(--crema);
       color: var(--gris-texto);
-      padding-top: 210px;
+      padding-top: 184px;
       padding-bottom: 178px;
       overflow-x: hidden;
       line-height: 1.5;
@@ -169,29 +169,30 @@
       padding-top: 0;
     }
 
+    /* Estilo El Establo: cabecera negra de mayor presencia, con el logo como punto focal. */
     .logo-container {
-      height: 94px;
+      height: 122px;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
       overflow: visible;
-      background: linear-gradient(90deg, transparent 0%, rgba(217, 180, 106, 0.22) 34%, rgba(217, 180, 106, 0.32) 50%, rgba(217, 180, 106, 0.22) 66%, transparent 100%) bottom / min(74vw, 420px) 1px no-repeat;
+      background: linear-gradient(90deg, transparent 0%, rgba(217, 180, 106, 0.22) 34%, rgba(217, 180, 106, 0.32) 50%, rgba(217, 180, 106, 0.22) 66%, transparent 100%) bottom / min(80vw, 520px) 1px no-repeat;
     }
 
     .logo-container::before {
       content: '';
       position: absolute;
-      width: min(54vw, 250px);
-      height: 80px;
+      width: min(62vw, 310px);
+      height: 104px;
       background: radial-gradient(ellipse at center, rgba(217, 180, 106, 0.13), transparent 68%);
       pointer-events: none;
     }
 
     .logo-container img {
       position: relative;
-      width: 86px;
-      height: 86px;
+      width: 110px;
+      height: 110px;
       margin: 0;
       display: block;
       object-fit: cover;
@@ -267,6 +268,10 @@
 
     .menu-section.active {
       display: block;
+    }
+
+    .menu-section.active > .section-title:first-child {
+      margin-top: 12px;
     }
 
     @keyframes fadeIn {
@@ -386,6 +391,50 @@
     #ensaladas .item-price {
       justify-self: end;
       text-align: right;
+    }
+
+    /* Platos: cuadrícula fija. Precio, cantidad y botones se mantienen en la primera fila. */
+    #platos .menu-item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 124px;
+      grid-template-rows: 42px auto;
+      column-gap: 12px;
+      align-items: start;
+    }
+
+    #platos .item-info {
+      grid-column: 1;
+      grid-row: 1 / span 2;
+      padding-right: 0;
+    }
+
+    #platos .item-header {
+      height: 42px;
+      min-height: 0;
+      align-items: center;
+    }
+
+    #platos .item-name,
+    #platos .item-price {
+      height: auto;
+      display: block;
+      transform: none;
+    }
+
+    #platos .item-price {
+      justify-self: end;
+      text-align: right;
+    }
+
+    #platos .quantity-control {
+      grid-column: 2;
+      grid-row: 1;
+      height: 42px;
+      margin: 0;
+      padding-top: 0;
+      align-self: start;
+      align-items: center;
+      justify-content: flex-end;
     }
 
     /* Ensaladas: cuadrícula fija. La descripción no cambia la altura de los controles. */
@@ -683,7 +732,7 @@
     @media (min-width: 768px) {
       .container {
         max-width: 860px;
-        padding: 34px 28px;
+        padding: 20px 28px 34px;
       }
 
       .nav-tabs {
@@ -749,11 +798,14 @@
         font-size: 0.88rem;
       }
 
+      #platos .menu-item,
       #ensaladas .menu-item {
         grid-template-columns: minmax(0, 1fr) 118px;
         grid-template-rows: 38px auto;
       }
 
+      #platos .item-header,
+      #platos .quantity-control,
       #ensaladas .item-header,
       #ensaladas .quantity-control {
         height: 38px;
