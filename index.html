@@ -1736,15 +1736,6 @@
       </div>
       <div class="menu-item">
         <div class="item-info">
-          <div class="item-header"><span class="item-name">Lomito al Grill</span><span class="item-price">$16</span></div>
-        </div>
-        <div class="quantity-control">
-          <button class="btn-minus" onclick="removeFromOrder('Lomito al Grill', 16)">-</button>
-          <button class="btn-plus" onclick="addToOrder('Lomito al Grill', 16)">+</button>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-info">
           <div class="item-header"><span class="item-name">Punta Trasera</span><span class="item-price">$16</span></div>
         </div>
         <div class="quantity-control">
@@ -1768,15 +1759,6 @@
         <div class="quantity-control">
           <button class="btn-minus" onclick="removeFromOrder('Flat Iron', 14)">-</button>
           <button class="btn-plus" onclick="addToOrder('Flat Iron', 14)">+</button>
-        </div>
-      </div>
-      <div class="menu-item">
-        <div class="item-info">
-          <div class="item-header"><span class="item-name">Lomito de Cerdo</span><span class="item-price">$14</span></div>
-        </div>
-        <div class="quantity-control">
-          <button class="btn-minus" onclick="removeFromOrder('Lomito de Cerdo', 14)">-</button>
-          <button class="btn-plus" onclick="addToOrder('Lomito de Cerdo', 14)">+</button>
         </div>
       </div>
       <div class="menu-item">
@@ -1807,6 +1789,16 @@
         </div>
       </div>
 
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-header"><span class="item-name">Cachapa con pollo</span><span class="item-price">$14</span></div>
+        </div>
+        <div class="quantity-control">
+          <button class="btn-minus" onclick="removeFromOrder('Cachapa con pollo', 14)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Cachapa con pollo', 14)">+</button>
+        </div>
+      </div>
+
       <div class="interactive-box">
         <div class="selector-group">
           <label style="color: #000000; font-weight: 800;">Cachapa con Carnes</label>
@@ -1820,7 +1812,7 @@
         </div>
         <div class="live-price-display" style="margin-top: 15px; padding: 10px;">
           <div style="font-size: 0.9rem; color: #ffffff;">Precio:</div>
-          <div class="price-value" style="font-size: 1.2rem; color: #D9B46A;">$14</div>
+          <div class="price-value" style="font-size: 1.2rem; color: #D9B46A;">$16</div>
           <div class="quantity-control">
             <button class="btn-minus" onclick="removeCachapaCarneFromOrder()" style="border: 1px solid #ffffff; color: #ffffff; background: none;">-</button>
             <span id="cachapa-selection-count" class="cachapa-selection-count">0</span>
@@ -2131,8 +2123,8 @@
           <div class="item-header"><span class="item-name">Refresco 2 Lts</span><span class="item-price">$4</span></div>
         </div>
         <div class="quantity-control">
-          <button class="btn-minus" onclick="removeFromOrder('Refresco 2L', 4)">-</button>
-          <button class="btn-plus" onclick="addToOrder('Refresco 2L', 4)">+</button>
+          <button class="btn-minus" onclick="removeFromOrder('Refresco 2L', 4.5)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Refresco 2L', 4.5)">+</button>
         </div>
       </div>
       <div class="menu-item">
@@ -2164,11 +2156,11 @@
       </div>
       <div class="menu-item">
         <div class="item-info">
-          <div class="item-header"><span class="item-name">Jarra de Refajo</span><span class="item-price">$6</span></div>
+          <div class="item-header"><span class="item-name">Jarra de Refajo</span><span class="item-price">$11</span></div>
         </div>
         <div class="quantity-control">
-          <button class="btn-minus" onclick="removeFromOrder('Jarra Refajo', 6)">-</button>
-          <button class="btn-plus" onclick="addToOrder('Jarra Refajo', 6)">+</button>
+          <button class="btn-minus" onclick="removeFromOrder('Jarra Refajo', 11)">-</button>
+          <button class="btn-plus" onclick="addToOrder('Jarra Refajo', 11)">+</button>
         </div>
       </div>
       <div class="menu-item">
@@ -2382,7 +2374,7 @@
 
     function getSelectedCachapa() {
       const proteina = document.getElementById('proteina-cachapa-select').value;
-      return { name: `Cachapa c/ ${proteina}`, price: 14 };
+      return { name: `Cachapa c/ ${proteina}`, price: 16 };
     }
 
     function updateCachapaSelectionCounter() {
@@ -2393,28 +2385,28 @@
     }
     const preciosCarne = {
       "Solomo": {
-        "1KG": 55,
+        "1KG": 50,
         "750GR": 40,
         "500GR": 30,
-        "250GR": 18
+        "250GR": 16
       },
       "Punta Trasera": {
-        "1KG": 55,
+        "1KG": 50,
         "750GR": 40,
         "500GR": 30,
-        "250GR": 18
+        "250GR": 16
       },
       "Lomo de Cerdo": {
-        "1KG": 55,
+        "1KG": 50,
         "750GR": 40,
         "500GR": 30,
-        "250GR": 18
+        "250GR": 16
       },
       "Costilla de Cerdo": {
-        "1KG": 55,
+        "1KG": 50,
         "750GR": 40,
         "500GR": 30,
-        "250GR": 18
+        "250GR": 16
       },
       "Pollo de Res": {
         "1KG": 35,
